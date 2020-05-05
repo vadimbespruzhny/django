@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Каталог производителей</title>
+{% endblock %}
+
+<body>
+    {% block content %}
+    <div class="container-content">
+        <div class="manufacturer">
+            {% for monitor in monitor_category %}
+            <div class="manufacturer_item">
+                <a href="{{ monitor.get_absolute_url }}">{{ monitor }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="manufacturer_detail">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore voluptate error expedita non totam nemo
+            odio
+            voluptatem ullam, nesciunt corrupti.
+        </div>
+        {% endblock %}
+    </div>
+</body>
+
+</html>
