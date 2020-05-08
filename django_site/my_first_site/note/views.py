@@ -52,8 +52,7 @@ def manufacturer_detail(request, pk):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    cart_add_form = CartAddForm()
-    context = {'product': product, 'cart_add_form': cart_add_form}
+    context = {'product': product}
     return render(request, 'note/templates/product_detail.html', context)
 
 

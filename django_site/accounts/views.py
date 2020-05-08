@@ -1,8 +1,9 @@
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from .forms import LoginForm, RegisterForm, UserChangeForm, CustomUserChangeForm, PasswordChangeForm
-
+from orders.models import Order, OrderItem
 # Create your views here.
 
 
@@ -11,8 +12,8 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect('index')
@@ -32,9 +33,13 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             new_user = form.save(commit=False)
-            new_user.set_password(form.cleaned_data['password1'])
+            new_user.set_password(form.cleaned_data.get('password1'))
             new_user.save()
-        return redirect('login')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('index')
     else:
         form = RegisterForm()
         return render(request, 'register.html', {'form': form})
@@ -77,3 +82,9 @@ def password_change(request):
     else:
         form = PasswordChangeForm()
         return render(request, 'password_change_form.html', {'form': form})
+
+
+
+
+
+

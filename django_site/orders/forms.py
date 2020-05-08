@@ -13,10 +13,12 @@ class OrderCreationForm(forms.ModelForm):
     phone = forms.CharField(label='Телефон', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
+    email = forms.EmailField(label='Email', widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
     comments = forms.CharField(label='Коментарий', widget=forms.Textarea(
         attrs={'rows': 3, 'class': 'form-control'}
     ), required=False)
 
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'phone', 'comments']
+        fields = ['first_name', 'last_name', 'phone', 'email', 'comments']

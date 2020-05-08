@@ -28,10 +28,11 @@ class Order(models.Model):
     last_name = models.CharField(max_length=20, null=True)
     phone = models.CharField(max_length=20, null=True)
     comments = models.CharField(max_length=20, null=True)
+    email = models.EmailField(max_length=50, null=True)
     items = models.ManyToManyField(OrderItem)
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField(null=True)
-    ordered = models.BooleanField(default=False)
+    ordered = models.BooleanField(default=False, verbose_name='Статус заказа')
 
     def __str__(self):
         return str(self.id)

@@ -1,9 +1,8 @@
 {% extends 'index.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
-{% block title %}
-<title>Login</title>
-{% endblock %}
+{% block title %}<title>Login</title>{% endblock %}
 
 {% block head %}
 {% endblock %}
@@ -12,9 +11,12 @@
 <div class="login">
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ form }}
         <button type="submit" class="btn btn-success btn-block">Войти</button>
         <button class="btn btn-success btn-block"><a href="{% url 'register' %}">Зарегистрироваться</a></button>
+        <a href="{% url 'password_reset' %}">Сброс пароля</a>
     </form>
 </div>
+{% endblock %}
+{% block footer %}
 {% endblock %}

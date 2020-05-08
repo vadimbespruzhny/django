@@ -52,7 +52,7 @@
                 <span>Сумма заказа: {{ order.total_order_price }} </span>
             </div>
             <a href="{% url 'order_create' %}">
-                <div class="order_create">Оформить заказ</div>
+                <div class="order_create_button">Оформить заказ</div>
             </a>
             <!-- <a href="{% url 'my_orders' %}">Мои заказы</a> -->
         </div>
@@ -60,4 +60,6 @@
 </div>
 
 {% endif %}
+{% endblock %}
+{% block footer %}
 {% endblock %}
