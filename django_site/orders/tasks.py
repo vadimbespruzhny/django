@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from .models import Order, OrderItem
 from django.shortcuts import get_object_or_404
 from .forms import OrderCreationForm
-from my_site.celeryapp import app
+from my_site.celery import app
 
 
 @app.task
