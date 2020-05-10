@@ -35,12 +35,6 @@ DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 ALLOWED_HOSTS = ['127.0.0.1']
 
 
-redis_url = os.getenv('REDISTOGO_URL')
-urlparse.uses_netloc.append('redis')
-url = urlparse.urlparse(redis_url)
-conn = Redis(host=url.hostname, port=url.port, password=url.password)
-
-
 r = redis.from_url(os.environ.get('REDIS_URL'))
 CACHES = {
     "default": {
