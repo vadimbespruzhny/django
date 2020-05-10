@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import dj_database_url
 import os
+import redis
 import smtplib
 import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -40,12 +41,13 @@ url = urlparse.urlparse(redis_url)
 conn = Redis(host=url.hostname, port=url.port, password=url.password)
 
 
-REDIS_HOST = 'localhost'
-REDIS_PORT = '6379'
-BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-
+r = redis.from_url(os.environ.get('REDIS_URL'))
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.RedisCache",
+        "LOCATION": os.environ.get('REDIS_URL'),
+    }
+}
 
 # Application definition
 INSTALLED_APPS = [
