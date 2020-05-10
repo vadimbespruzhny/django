@@ -34,8 +34,9 @@ DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
-BROKER_URL = os.environ.get("REDISCLOUD_URL", "django://")
-BROKER_POOL_LIMIT = None
+CELERY_BROKER_URL = 'redis://h:p92ce18784d7e99200aee5dd852f0f578f493764236e9770e11d2ff39796fccaf@ec2-3-211-201-160.compute-1.amazonaws.com:29259'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 # Application definition
 INSTALLED_APPS = [
