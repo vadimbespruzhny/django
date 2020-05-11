@@ -1,6 +1,6 @@
 import os
 from celery import Celery
-from post_request_task.task import PostRequestTask
+from django.post_request_task.task import PostRequestTask
 from django.conf import settings
 
 
