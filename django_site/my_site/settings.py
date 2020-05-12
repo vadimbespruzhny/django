@@ -167,7 +167,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'vadik654321@gmail.com'
-EMAIL_HOST_PASSWORD = 'mis129ra'
+EMAIL_HOST_PASSWORD = 'oayrvtjkpqdvgdqh'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 SERVER_EMAIL = EMAIL_HOST_USER
