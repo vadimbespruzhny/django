@@ -115,8 +115,6 @@ def cart_add_product(request, product_id):
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
-        time.sleep(5)
-        order_created.delay(order.pk)
         order.items.add(order_item)
         messages.info(request, 'Товар добавлен в корзину')
         return redirect('cart_detail')
