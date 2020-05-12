@@ -7,8 +7,9 @@ from my_site.celery import app
 
 
 @app.task
-def order_created():
-    subject = f'Первый Компьютерный супермаркет. Онлайн заказ №:'
+def order_created(pk):
+    order = Order.objects.get(pk=pk)
+    subject = f'Первый Компьютерный супермаркет. Онлайн заказ №: {order.pk}'
     message = f'Номер заказа \n Заказ:  \n Количество:'
     mail_sent = send_mail(
         subject, message, 'vadik654321@gmail.com', ['vadik654321@gmail.com'])
