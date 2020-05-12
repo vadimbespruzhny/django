@@ -2,6 +2,7 @@ from .models import Order, OrderItem
 from .forms import OrderCreationForm
 from django.shortcuts import redirect, render
 from .tasks import order_created
+from time import sleep
 
 
 def order_create(request):
@@ -17,7 +18,8 @@ def order_create(request):
             order_items.update(ordered=True)
             for item in order_items:
                 item.save()
-            order_created.delay()
+            sleep(5)
+            order_created.delay(new_order.pk)
             context = {'form': new_order, 'order_obj': order_obj}
             return render(request, 'order_created.html', context)
     else:

@@ -10,6 +10,7 @@ from orders.models import OrderItem, Order
 from orders.tasks import order_created
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import time
 # Create your views here
 
 
@@ -114,6 +115,7 @@ def cart_add_product(request, product_id):
         ordered_date = timezone.now()
         order = Order.objects.create(
             user=request.user, ordered_date=ordered_date)
+        time.sleep(5)
         order_created.delay(order.pk)
         order.items.add(order_item)
         messages.info(request, 'Товар добавлен в корзину')
