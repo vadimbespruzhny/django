@@ -8,7 +8,6 @@ from time import sleep
 def order_create(request):
     order_obj = Order.objects.get(user=request.user, ordered=False)
     form = OrderCreationForm()
-    order_created.delay(order_obj.pk)
     if request.method == 'POST':
         form = OrderCreationForm(request.POST, instance=order_obj)
         if form.is_valid():
@@ -19,6 +18,7 @@ def order_create(request):
             order_items.update(ordered=True)
             for item in order_items:
                 item.save()
+            order_created.delay(order_obj.pk)
             context = {'form': new_order, 'order_obj': order_obj}
             return render(request, 'order_created.html', context)
     else:
