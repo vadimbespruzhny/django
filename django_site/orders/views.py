@@ -1,8 +1,7 @@
 from .models import Order, OrderItem
 from .forms import OrderCreationForm
 from django.shortcuts import redirect, render
-from .tasks import order_created
-from time import sleep
+from .tasks import order_created_task
 
 
 def order_create(request):
@@ -18,17 +17,28 @@ def order_create(request):
             order_items.update(ordered=True)
             for item in order_items:
                 item.save()
-            order_created.delay(order_obj.pk)
-            context = {'form': new_order, 'order_obj': order_obj}
-            return render(request, 'order_created.html', context)
+            order_created_task.delay(order_obj.pk)
+            return redirect('order_created')
+            # return render(request, 'order_created.html', context)
     else:
         form = OrderCreationForm()
         context = {'form': form, 'order_obj': order_obj}
         return render(request, 'order_create.html', context)
 
 
-def order_detail(request):
-    order = Order.objects.all()
-    order_item = OrderItem.objects.all()
-    context = {'order': order, 'order_item': order_item}
-    return render(request, 'my_orders.html', context)
+def order_created(request):
+    new_order = Order.objects.all()
+    for n in new_order:
+        n = n
+    return render(request, 'order_created.html', {'new_order': n})
+
+# def order_detail(request):
+#     order = Order.objects.select_related().get(user=request.user)
+#     new_order = order.items.all()
+#     for i in new_order:
+#         context = {
+#             'order': order,
+#             'new_order': new_order,
+#             'i': i,
+#         }
+#         return render(request, 'my_orders.html', context)

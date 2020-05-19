@@ -13,9 +13,9 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(max_length=25, label='Логин', widget=forms.TextInput(
+    username = forms.CharField(max_length=25, label='Имя', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    email = forms.EmailField(max_length=50, label='Email', widget=forms.TextInput(
+    email = forms.EmailField(max_length=50, label='Email', widget=forms.EmailInput(
         attrs={'class': 'form-control'}))
     password1 = forms.CharField(max_length=25, label='Пароль', widget=forms.TextInput(
         attrs={'class': 'form-control'}))
@@ -34,7 +34,7 @@ class RegisterForm(forms.ModelForm):
 
 
 class CustomUserChangeForm(forms.ModelForm):
-    
+
     class Meta:
         model = User
         fields = ('username', 'email')
@@ -57,4 +57,3 @@ class PasswordChangeForm(forms.Form):
         if new_pwd1 != new_pwd2:
             raise ValidationError('password dont match')
         return new_pwd2
-

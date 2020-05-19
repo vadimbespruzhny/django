@@ -9,13 +9,15 @@
 
 {% block main %}
 <div class="login">
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit" class="btn btn-success btn-block">Войти</button>
-        <button class="btn btn-success btn-block"><a href="{% url 'register' %}">Зарегистрироваться</a></button>
-        <a href="{% url 'password_reset' %}">Сброс пароля</a>
-    </form>
+    <div class="login_inside">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-success btn-block">Войти</button>
+            <button class="btn btn-success btn-block"><a href="{% url 'register' %}">Зарегистрироваться</a></button>
+            <a href="{% url 'password_reset' %}">Сброс пароля</a>
+        </form>
+    </div>
 </div>
 {% endblock %}
 {% block footer %}

@@ -45,7 +45,6 @@
     </div>
     <div class="cart_summary">
         <div class="cart_summary_info">
-            <span>ID: {{ order.id }}</span>
             <div class="item_summary">
                 <span>Товары: {{ order.items.count }}</span>
             </div>
@@ -55,7 +54,6 @@
             <a href="{% url 'order_create' %}">
                 <div class="order_create_button">Оформить заказ</div>
             </a>
-            <!-- <a href="{% url 'my_orders' %}">Мои заказы</a> -->
         </div>
     </div>
 </div>

@@ -30,30 +30,48 @@ class Manufacturer(models.Model):
         return reverse('manufacturer_detail', args=[str(self.pk)])
 
 
-CATEGORY_CHOICES = (
-    ('note', 'notebook'),
-    ('mon', 'monitor'),
-    ('access', 'accessories'),
-)
-
-
 class Product(models.Model):
-    brand = models.ForeignKey(Manufacturer, verbose_name='Производитель',
-                              related_name='product_list',
-                              max_length=20,
-                              on_delete=models.CASCADE, null=True)
-    name = models.CharField(verbose_name='Модель', max_length=50,
-                            blank=True, null=True, unique=True)
-    price = models.DecimalField(verbose_name='Цена', max_digits=10,
-                                decimal_places=2, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=10)
+    NOTEBOOK = 'notebook'
+    MONITOR = 'monitor'
+    CATEGORY_CHOICES = (
+        (NOTEBOOK, 'notebook'),
+        (MONITOR, 'monitor'),
+    )
+    brand = models.ForeignKey(
+        Manufacturer, 
+        verbose_name='Производитель',
+        related_name='product_list',
+        max_length=20,
+        on_delete=models.CASCADE, null=True)
+    name = models.CharField(
+        verbose_name='Модель', 
+        max_length=50,
+        blank=True, 
+        null=True, 
+        unique=True)
+    price = models.DecimalField(
+        verbose_name='Цена', 
+        max_digits=10,
+        decimal_places=2, 
+        null=True)
+    category = models.CharField(
+        verbose_name='Категория', 
+        max_length=50, 
+        choices=CATEGORY_CHOICES, 
+        default='')
     image = models.ImageField(blank=True, null=True)
     descrip = models.ForeignKey(
-        'Description', blank=True, max_length=20, null=True, on_delete=models.CASCADE)
+        'Description', 
+        verbose_name='Характеристики товара', 
+        blank=True, 
+        max_length=20, 
+        null=True, 
+        on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+        ordering = ['-id']
 
     def __str__(self):
         return str(self.name)
@@ -82,6 +100,6 @@ class Description(models.Model):
     class Meta:
         verbose_name = 'Характеристики'
         verbose_name_plural = 'Характеристики'
-        
+
     def __str__(self):
         return self.product_name.name

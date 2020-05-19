@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import dj_database_url
 import os
-import redis
 import smtplib
-import django_heroku
+
+# import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,25 +30,27 @@ SECRET_KEY = os.environ.get(
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
+
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
 
+# REDIS related settings
+# REDIS_HOST = 'ec2-3-211-201-160.compute-1.amazonaws.com'
+# REDIS_PORT = '29259'
+# CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 # BROKER_URL = 'redis://localhost:6379/0'
 BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 # RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-
-# REDIS related settings
-# REDIS_HOST = 'ec2-3-211-201-160.compute-1.amazonaws.com'
-# REDIS_PORT = '29259'
-# CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+# CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+# CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 BROKER_URL = 'redis://h:p92ce18784d7e99200aee5dd852f0f578f493764236e9770e11d2ff39796fccaf@ec2-3-211-201-160.compute-1.amazonaws.com:29259'
 RESULT_BACKEND = 'redis://h:p92ce18784d7e99200aee5dd852f0f578f493764236e9770e11d2ff39796fccaf@ec2-3-211-201-160.compute-1.amazonaws.com:29259'
-# BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -62,7 +64,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'accounts',
     'orders',
-    'import_export',
+    # 'import_export',
 ]
 
 
@@ -175,4 +177,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

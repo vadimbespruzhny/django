@@ -7,10 +7,8 @@ from django.views.generic import ListView
 from django.db.models import Q
 from django.utils import timezone
 from orders.models import OrderItem, Order
-from orders.tasks import order_created
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import time
 # Create your views here
 
 
@@ -32,16 +30,15 @@ def paginate(request, category, num_items):
 
 
 def note(request):
-    note_category = Product.objects.filter(category__iexact='note')
-    pagin = paginate(request, note_category, 6)
-    context = {'note_category': note_category,
-               'pagin': pagin}
+    note = Product.objects.filter(category='notebook')
+    pagin = paginate(request, note, 6)
+    context = {'pagin': pagin, 'note': note}
     return render(request, 'note/templates/note.html', context)
 
-
 def monitor(request):
-    monitor_category = Product.objects.filter(category__iexact='mon')
-    context = {'monitor_category': monitor_category}
+    monitor = Product.objects.filter(category='monitor')
+    pagin = paginate(request, monitor, 6)
+    context = {'pagin': pagin, 'monitor': monitor}
     return render(request, 'note/templates/monitor.html', context)
 
 

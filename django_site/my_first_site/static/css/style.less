@@ -71,7 +71,26 @@ body {
 .login {
     width: 500px;
     margin: auto;
+    .login_inside {
+        margin-top: 50px;
+    }
 }
+
+.dollar_form {
+    width: 250px;
+    float: left;
+}
+
+.dollar_list_wrap {
+    display: flex;
+    .dollar_list {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        margin-left: 10px;
+    }
+}
+
 
 .main_line {
     // background: @red_color
@@ -534,5 +553,13 @@ body {
     }
     form {
         margin-top: 15px;
+    }
+}
+.order_created {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    .order_created_inside {
+        margin-left: 50px;
     }
 }

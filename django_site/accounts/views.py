@@ -82,3 +82,9 @@ def password_change(request):
     else:
         form = PasswordChangeForm()
         return render(request, 'password_change_form.html', {'form': form})
+
+
+
+
+
+

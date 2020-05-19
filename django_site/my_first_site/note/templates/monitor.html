@@ -2,26 +2,38 @@
 {% load static %}
 
 {% block title %}
-<title>Каталог производителей</title>
+<title>Ноутбуки</title>
 {% endblock %}
 
 <body>
-    {% block content %}
-    <div class="container-content">
-        <div class="manufacturer">
-            {% for monitor in monitor_category %}
-            <div class="manufacturer_item">
-                <a href="{{ monitor.get_absolute_url }}">{{ monitor }}</a>
+    {% block main %}
+    <div class="right_block">
+        {% for monitor in pagin.notes.object_list %}
+        <div class="product_card">
+            <a href="{{ monitor.get_absolute_url }}">
+                <div class="product_body">
+                    {% if monitor.image %}
+                    <img src="{{ monitor.image.url }}">
+                    {% endif %}
+                </div>
+                <div class="product_name">
+                    {{ monitor }}
+                </div>
+            </a>
+            <div class="product_price_block">
+                <div class="price">
+                    {{ monitor.price }} руб.
+                </div>
+                <a href="{% url 'cart_add_product' monitor.id %}">
+                    <div class="cart_add">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </a>
             </div>
-            {% endfor %}
         </div>
-        <div class="manufacturer_detail">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore voluptate error expedita non totam nemo
-            odio
-            voluptatem ullam, nesciunt corrupti.
-        </div>
-        {% endblock %}
+        {% endfor %}
     </div>
+    {% endblock %}
 </body>
 
 </html>

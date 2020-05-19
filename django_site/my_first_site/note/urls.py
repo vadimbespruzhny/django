@@ -1,5 +1,6 @@
 from django.urls import path
 from my_first_site.note import views
+from my_first_site.dollar import dollar_view
 
 urlpatterns = [
     path('cart_detail', views.cart_detail, name='cart_detail'),
@@ -21,5 +22,6 @@ urlpatterns = [
          name='product_detail'),
     path('monitor', views.monitor, name='monitor'),
     path('note', views.note, name='note'),
+    path('dollar', dollar_view, name='dollar_view'),
     path('', views.index, name='index'),
 ]
