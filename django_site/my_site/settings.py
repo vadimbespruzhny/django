@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import dj_database_url
 import os
 import smtplib
-
+import redis
+import django_heroku
 # import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,15 +42,15 @@ ALLOWED_HOSTS = ['127.0.0.1', 'shrouded-mesa-89939.herokuapp.com']
 # BROKER_URL = 'redis://localhost:6379/0'
 # BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 # CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-REDIS_HOST = 'ec2-3-211-201-160.compute-1.amazonaws.com'
-REDIS_PORT = '29259'
-BROKER_URL = 'redis://h:p92ce18784d7e99200aee5dd852f0f578f493764236e9770e11d2ff39796fccaf@ec2-3-211-201-160.compute-1.amazonaws.com:29259'
-RESULT_BACKEND = 'redis://h:p92ce18784d7e99200aee5dd852f0f578f493764236e9770e11d2ff39796fccaf@ec2-3-211-201-160.compute-1.amazonaws.com:29259'
+# REDIS_HOST = 'ec2-52-201-164-53.compute-1.amazonaws.com'
+# REDIS_PORT = '21089'
+BROKER_URL = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
+RESULT_BACKEND = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
 
 
 # Application definition
@@ -177,4 +178,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
