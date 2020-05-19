@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'shrouded-mesa-89939.herokuapp.com']
 
 
 # REDIS related settings
