@@ -37,17 +37,17 @@ ALLOWED_HOSTS = ['127.0.0.1', 'shrouded-mesa-89939.herokuapp.com']
 
 
 # REDIS related settings
-# REDIS_HOST = 'ec2-3-211-201-160.compute-1.amazonaws.com'
-# REDIS_PORT = '29259'
 # CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 # BROKER_URL = 'redis://localhost:6379/0'
 # BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-# RESULT_BACKEND = 'redis://localhost:6379/0'
+
 # CELERY_ACCEPT_CONTENT = ['application/json']
 # CELERY_TASK_SERIALIZER = 'json'
 # CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 # CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+REDIS_HOST = 'ec2-3-211-201-160.compute-1.amazonaws.com'
+REDIS_PORT = '29259'
 BROKER_URL = 'redis://h:p92ce18784d7e99200aee5dd852f0f578f493764236e9770e11d2ff39796fccaf@ec2-3-211-201-160.compute-1.amazonaws.com:29259'
 RESULT_BACKEND = 'redis://h:p92ce18784d7e99200aee5dd852f0f578f493764236e9770e11d2ff39796fccaf@ec2-3-211-201-160.compute-1.amazonaws.com:29259'
 
