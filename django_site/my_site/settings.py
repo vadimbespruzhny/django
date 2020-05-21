@@ -14,7 +14,6 @@ import dj_database_url
 import os
 import smtplib
 import redis
-import django_heroku
 # import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,30 +24,27 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'my_site.settings'
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'wribslpz92-!1#eg=na3^qnbdal(3zl+cb33^lcha8u+l87h1!'
-SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY', 'wribslpz92-!1#eg=na3^qnbdal(3zl+cb33^lcha8u+l87h1!')
+SECRET_KEY = 'wribslpz92-!1#eg=na3^qnbdal(3zl+cb33^lcha8u+l87h1!'
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = False
 
+# DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 
-DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
-
-ALLOWED_HOSTS = ['127.0.0.1', 'shrouded-mesa-89939.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # REDIS related settings
+
+
 # CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
 # BROKER_URL = 'redis://localhost:6379/0'
-# BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+# RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 # CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-# REDIS_HOST = 'ec2-52-201-164-53.compute-1.amazonaws.com'
-# REDIS_PORT = '21089'
 BROKER_URL = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
 RESULT_BACKEND = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
 
@@ -110,10 +106,20 @@ WSGI_APPLICATION = 'my_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'kslgua_my_db',
+        'USER': 'kslgua',
+        'PASSWORD': '22Gm).g1FwtUI6',
+        'HOST': 'localhost',
     }
 }
 
@@ -178,4 +184,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
