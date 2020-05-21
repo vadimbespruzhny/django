@@ -36,16 +36,16 @@ ALLOWED_HOSTS = ['*']
 
 
 # CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-# BROKER_URL = 'redis://localhost:6379/0'
+BROKER_URL = 'redis://localhost:6379/0'
+RESULT_BACKEND = 'redis://localhost:6379/0'
 BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
-# RESULT_BACKEND = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 # CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 # CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-BROKER_URL = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
-RESULT_BACKEND = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
+# BROKER_URL = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
+# RESULT_BACKEND = 'redis://h:p0a265b6fc61701a38b10d6030eac86ecb397ae03a87bbfe27abcd8a173acc28d@ec2-52-201-164-53.compute-1.amazonaws.com:21089'
 
 
 # Application definition
