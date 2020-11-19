@@ -33,22 +33,19 @@
                             </div>
                         </div>
                         <div class="logo_text">
-                            {% if user.is_authenticated %}
                             <a href="{% url 'index' %}">Компьютерный супермаркет</a>
-                            {% else %}
-                            <a href="#">Компьютерный супермаркет</a>
-                            {% endif %}
                         </div>
                     </div>
                     <div class="header_inside">
                         <div class="contacts">
                             <div class="contacts_inside">
-                                <div>
-                                    <!-- вставить иконку -->
-                                    <span>Тел: 81236547897</span>
-                                </div>
-                                <div>
+                                <div class="address">
                                     <span>г. Луганск, Ул. Советская, 52</span>
+                                </div>
+                                <div class="phone">
+                                    <span>Тел: (072)-138-66-50</span>
+                                    <span>(066)-697-55-79</span>
+                                    <span>(050)-323-29-60</span>
                                 </div>
                             </div>
                         </div>
@@ -70,6 +67,7 @@
                 </div>
                 {% if user.is_superuser %}
                 <a href="{% url 'dollar_view' %}">Курс</a>
+                <a href="{% url 'new_model' %}">Новая модель</a>
                 {% endif %}
                 <div class="users">
                     {% if user.is_authenticated %}
@@ -80,7 +78,6 @@
                         <div>
                             {% if order_count|length > 0 %}
                             <a href="{% url 'cart_detail' %}">Корзина: {{order_count|length}}</a>
-                            {{order_count_2}}
                             {% else %}
                             <p>Корзина пуста</p>
                             {% endif %}
@@ -100,6 +97,9 @@
                     </div>
                     {% endif %}
                 </div>
+            </div>
+            <div class="status">
+                <span>Сайт находится на стадии разработки</span>
             </div>
             <div class="content">
                 <div class="left_block">
@@ -123,7 +123,7 @@
                                 <a href="">Видеокарты</a>
                                 <a href="">Бумага</a>
                                 <a href="">Внешние накопители и карты</a>
-                                <a href="">Гарнитуры</a>
+                                <a href="{% url 'headphones' %}">Гарнитуры</a>
                                 <a href="">Джойстики</a>
                                 <a href="">Диски и батарейки</a>
                                 <a href="">ИБП</a>

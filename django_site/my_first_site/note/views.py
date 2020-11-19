@@ -1,15 +1,37 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from my_first_site.note.models import Product, Manufacturer
-from my_first_site.note.forms import NotebookForm, ManufacturerForm
+from my_first_site.note.models import Product, New_model
+from my_first_site.note.forms import NotebookForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import ListView
 from django.db.models import Q
 from django.utils import timezone
 from orders.models import OrderItem, Order
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import ListView, DetailView
+from django.http import JsonResponse
+
 # Create your views here
+
+
+class New_model_class(ListView):
+    model = New_model
+    template_name = 'note/templates/new_model.html'
+    context_object_name = 'models_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active'] = New_model.objects.filter(status=True)
+        return context
+
+
+def is_auth(func):
+    def wrapper(request, product_id):
+        if request.user.is_authenticated:
+            cart_add_product(request, product_id)
+        else:
+            return redirect('register')
+    return wrapper
 
 
 def index(request):
@@ -20,71 +42,53 @@ def paginate(request, category, num_items):
     paginator = Paginator(category, num_items)
     page = request.GET.get('page')
     try:
-        notes = paginator.page(page)
+        items = paginator.page(page)
     except PageNotAnInteger:
-        notes = paginator.page(1)
+        items = paginator.page(1)
     except EmptyPage:
-        notes = paginator.page(paginator.num_pages)
-    context = {'paginator': paginator, 'notes': notes}
+        items = paginator.page(paginator.num_pages)
+    context = {'paginator': paginator, 'items': items}
     return context
 
 
-def note(request):
-    note = Product.objects.filter(category='notebook')
-    pagin = paginate(request, note, 6)
-    context = {'pagin': pagin, 'note': note}
-    return render(request, 'note/templates/note.html', context)
+class NoteView(ListView):
+    model = Product
+    template_name = 'note/templates/note.html'
 
-def monitor(request):
-    monitor = Product.objects.filter(category='monitor')
-    pagin = paginate(request, monitor, 6)
-    context = {'pagin': pagin, 'monitor': monitor}
-    return render(request, 'note/templates/monitor.html', context)
-
-
-def manufacturer_detail(request, pk):
-    manufacturer = get_object_or_404(Manufacturer, pk=pk)
-    context = {'manufacturer': manufacturer}
-    return render(request, 'note/templates/manufacturer_detail.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        note = Product.objects.filter(category='notebook')
+        paginator = paginate(self.request, note, 6)
+        context['pagin'] = paginator
+        return context
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {'product': product}
-    return render(request, 'note/templates/product_detail.html', context)
+class HeadphonesView(ListView):
+    model = Product
+    template_name = 'note/templates/headphones.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        headphone = Product.objects.filter(category='headphones')
+        paginator = paginate(self.request, headphone, 6)
+        context['pagin'] = paginator
+        return context
 
 
-def product_create(request):
-    form = NotebookForm()
-    if request.method == 'POST':
-        form = NotebookForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return HttpResponseRedirect(reverse('note'))
-    else:
-        return render(request, 'note/templates/product_create.html', {'form': form})
+class DetailView(DetailView):
+    model = Product
+    template_name = 'note/templates/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        return queryset
 
 
-def product_delete(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == 'POST':
-        product.delete()
-        return HttpResponseRedirect(reverse('note'))
-    else:
-        return render(request, 'note/templates/product_delete.html', {'product': product})
-
-
-def manufacturer_create(request):
-    form = ManufacturerForm()
-    if request.method == 'POST':
-        form = ManufacturerForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return HttpResponseRedirect(reverse('products'))
-    else:
-        return render(request, 'note/templates/manufacturer_create.html', {'form': form})
-
-
+@is_auth
 def cart_add_product(request, product_id):
     item = get_object_or_404(Product, pk=product_id)
     # создаем объект заказа
@@ -127,10 +131,7 @@ def cart_remove(request, product_id):
         # проверяем есть ли единица товара в заказе
         if order.items.filter(item=item.id):
             order_item = OrderItem.objects.filter(
-                item=item,
-                user=request.user,
-                ordered=False
-            )[0]
+                item=item, user=request.user, ordered=False)[0]
             if order_item.quantity > 1:
                 order_item.quantity -= 1
                 order_item.save()

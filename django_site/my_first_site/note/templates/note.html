@@ -8,31 +8,39 @@
 <body>
     {% block main %}
     <div class="right_block">
-        {% for note in pagin.notes.object_list %}
+        {% for item in pagin.items.object_list %}
         <div class="product_card">
-            <a href="{{ note.get_absolute_url }}">
+            <a href="{{ item.get_absolute_url }}">
                 <div class="product_body">
-                    {% if note.image %}
-                    <img src="{{ note.image.url }}">
+
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}">
                     {% endif %}
                 </div>
                 <div class="product_name">
-                    {{ note }}
+                    {{ item }}
                 </div>
             </a>
             <div class="product_price_block">
                 <div class="price">
-                    {{ note.price }} руб.
+                    {{ item.price }} руб.
                 </div>
-                <a href="{% url 'cart_add_product' note.id %}">
+                {% if item.quantity %}
+                <a href="{% url 'cart_add_product' item.id %}">
                     <div class="cart_add">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
                 </a>
+                {% else %}
+                <div class="cart_add">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
     {% endblock %}
 </body>
+
 </html>

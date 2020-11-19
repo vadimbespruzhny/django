@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import Product, OrderItem, Order
 
 
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(admin.ModelAdmin): 
     list_display = ['id', 'user', 'ordered']
 
 

@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import dj_database_url
 import os
 import smtplib
-import django_heroku
+import redis
+# import django_heroku
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +26,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'my_site.settings'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'wribslpz92-!1#eg=na3^qnbdal(3zl+cb33^lcha8u+l87h1!'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+
 
 # DEBUG = bool(os.environ.get('DJANGO_DEBUG', False))
 
@@ -36,16 +38,12 @@ ALLOWED_HOSTS = ['*']
 
 
 # CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-# BROKER_URL = 'redis://localhost:6379/0'
-# RESULT_BACKEND = 'redis://localhost:6379/0'
+BROKER_URL = 'redis://localhost:6379/0'
+RESULT_BACKEND = 'redis://localhost:6379/0'
 BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
-# CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-BROKER_URL = 'redis://h:p7e6841d37b8a2adeed0ef6b97b451d9699ee84c82fd5499e2b2ab94b333039c5@ec2-54-243-79-158.compute-1.amazonaws.com:19549'
-# RESULT_BACKEND = 'redis://h:p7e6841d37b8a2adeed0ef6b97b451d9699ee84c82fd5499e2b2ab94b333039c5@ec2-54-243-79-158.compute-1.amazonaws.com:19549'
 
 
 # Application definition
@@ -104,13 +102,6 @@ WSGI_APPLICATION = 'my_site.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -180,4 +171,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())

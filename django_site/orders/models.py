@@ -10,9 +10,14 @@ from my_first_site.note.models import Product
 class OrderItem(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=25, null=True, blank=True)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
+
+    class Meta:
+        verbose_name = 'Заказанный товар'
+        verbose_name_plural = 'Заказанные товары'
 
     def __str__(self):
         return f'{self.item}'
@@ -23,7 +28,8 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=20,  null=True)
     last_name = models.CharField(max_length=20, null=True)
     phone = models.CharField(max_length=20, null=True)
@@ -33,6 +39,10 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField(null=True)
     ordered = models.BooleanField(default=False, verbose_name='Статус заказа')
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
     def __str__(self):
         return str(self.id)

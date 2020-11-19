@@ -18,6 +18,6 @@ def order_created_task(pk):
     mail_sent = send_mail(
         subject, message, 
         'vadik654321@gmail.com', 
-        [order.email],
+        recipient_list=['vadik654321@gmail.com', order.email],
         html_message=msg_html)
     return mail_sent

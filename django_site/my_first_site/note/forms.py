@@ -1,5 +1,5 @@
 from django import forms
-from my_first_site.note.models import Product, Manufacturer
+from my_first_site.note.models import Product
 
 
 class DollarForm(forms.ModelForm):
@@ -16,7 +16,7 @@ class NotebookForm(forms.ModelForm):
         fields = ('brand', 'name', 'price')
 
 
-class ManufacturerForm(forms.ModelForm):
-    class Meta:
-        model = Manufacturer
-        fields = ('name', 'country')
+# class ManufacturerForm(forms.ModelForm):
+#     class Meta:
+#         model = Manufacturer
+#         fields = ('name', 'country')
